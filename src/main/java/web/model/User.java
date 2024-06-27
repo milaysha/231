@@ -16,9 +16,9 @@ public class User {
     private int age;
 
     public User() {}
-    public User(String name, String lastname, int age) {
+    public User(String name, String lastName, int age) {
         this.name = name;
-        this.lastname = lastname;
+        this.lastname = lastName;
         this.age = age;
 
     }

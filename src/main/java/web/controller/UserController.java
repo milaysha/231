@@ -11,7 +11,7 @@ import web.service.UserServiceImpl;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @Autowired
     public UserController(UserServiceImpl userService) {
@@ -21,43 +21,43 @@ public class UserController {
     @GetMapping
     public String index(ModelMap model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "/WEB-INF/pages/users.html";
+        return "/users";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id, ModelMap model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "/WEB-INF/pages/show.html";
+        return "users";
     }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "/WEB-INF/pages/new.html";
+        return "users";
     }
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
         userService.saveUser(user);
-        return "redirect:/users";
+        return "users";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
-        return "/WEB-INF/pages/edit.html";
+        return "users";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
         userService.updateUser(id, user);
-        return "redirect:/users";
+        return "users";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "users";
     }
 
 }
