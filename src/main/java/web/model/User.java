@@ -1,58 +1,63 @@
 package web.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
+    private int id;
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "last_name")
-    private String lastname;
-    @Column(name = "age")
-    private int age;
+    @Column(name = "email", nullable = false)
+    private String email;
 
     public User() {}
-    public User(String name, String lastName, int age) {
-        this.name = name;
-        this.lastname = lastName;
-        this.age = age;
 
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastname;
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public void setLastName(String lastname) {
-        this.lastname = lastname;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(name, user.name) && Objects.equals(email, user.email);
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email);
     }
 
     @Override
@@ -60,8 +65,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", username='" + lastname + '\'' +
-                ", age=" + age +
+                ", email='" + email + '\'' +
                 '}';
     }
 }
